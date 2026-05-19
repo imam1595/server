@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require("cors")
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 dotenv.config();
 
 const uri = process.env.MONGO_DB;
@@ -38,13 +38,22 @@ async function run() {
     app.post('/car', async (req, res) => {
       const carData = req.body;
 
-      console.log(carData);
+      // console.log(carData);
 
       const result = await carCollection.insertOne(carData);
 
       res.json(result);
     })
 
+
+    app.get('/car/:id', async (req, res) => {
+
+        const {id} = req.params
+
+        const result = await carCollection.findOne({_id: new ObjectId(id)})
+
+        res.json(result)
+      })
 
 
 
