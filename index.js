@@ -28,6 +28,7 @@ async function run() {
 
     const db = client.db("driveEasy");
     const carCollection = db.collection('cars');
+    const bookingsCollection = db.collection('bookings');
 
 
     app.get('/car', async (req, res) => {
@@ -53,7 +54,16 @@ async function run() {
         const result = await carCollection.findOne({_id: new ObjectId(id)})
 
         res.json(result)
-      })
+    })
+
+    app.post('/bookings', async (req, res) => {
+      const bookingData = req.body;
+
+      const result = await bookingsCollection.insertOne(bookingData);
+
+      res.json(result);
+    })
+
 
 
 
