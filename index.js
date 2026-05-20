@@ -52,6 +52,11 @@ async function run() {
       res.json(result);
     })
 
+    app.get('/myAddedCars', async (req, res) => {
+      const result = await myAddedCarsCollection.find().toArray();
+      res.json(result);
+    })
+
     app.post('/car', async (req, res) => {
       const carData = req.body;
 
