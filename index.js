@@ -57,6 +57,24 @@ async function run() {
       res.json(result);
     })
 
+    app.patch('/myAddedCars/:id', async (req, res) => {
+      const {id} = req.params;
+      const updatedData  = req.body;
+
+      if (!ObjectId.isValid(id)) {
+    return res.status(400).json({
+      message: "Invalid ID"
+    });
+  }
+
+      const result = await myAddedCarsCollection.updateOne(
+        {_id: new ObjectId(id)},
+        {$set: updatedData}
+      )
+
+      res.json(result);
+    })
+
     app.post('/car', async (req, res) => {
       const carData = req.body;
 
