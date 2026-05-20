@@ -60,7 +60,7 @@ async function run() {
     app.get('/bookings/:userId', async (req, res) => {
       const {userId} = req.params;
 
-      const result = await bookingsCollection.find({userId:userId});
+      const result = await bookingsCollection.find({userId:userId}).toArray();
 
       res.json(result);
     })
