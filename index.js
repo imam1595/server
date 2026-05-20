@@ -27,8 +27,24 @@ async function run() {
     await client.connect();
 
     const db = client.db("driveEasy");
+
     const carCollection = db.collection('cars');
+
     const bookingsCollection = db.collection('bookings');
+
+    const myAddedCarsCollection = db.collection('myAddedCars')
+
+
+
+    // app.post('/myAddedCars', async (req, res) => {
+    //   const myAddedCarsData = req.body;
+
+    //   // console.log(myAddedCarsData);
+
+    //   const result = await myAddedCarsCollection.insertOne(myAddedCarsData);
+
+    //   res.json(result);
+    // })
 
 
     app.get('/car', async (req, res) => {
@@ -39,11 +55,13 @@ async function run() {
     app.post('/car', async (req, res) => {
       const carData = req.body;
 
-      // console.log(carData);
+      console.log(carData);
 
-      const result = await carCollection.insertOne(carData);
+      const result1 = await carCollection.insertOne(carData);
+      const result2 = await myAddedCarsCollection.insertOne(carData);
+      
 
-      res.json(result);
+      res.json({result1, result2});
     })
 
 
@@ -52,6 +70,7 @@ async function run() {
         const {id} = req.params
 
         const result = await carCollection.findOne({_id: new ObjectId(id)})
+        
 
         res.json(result)
     })
