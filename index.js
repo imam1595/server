@@ -61,11 +61,11 @@ async function run() {
       const {id} = req.params;
       const updatedData  = req.body;
 
-      if (!ObjectId.isValid(id)) {
-    return res.status(400).json({
-      message: "Invalid ID"
-    });
-  }
+          if (!ObjectId.isValid(id)) {
+        return res.status(400).json({
+          message: "Invalid ID"
+        });
+      }
 
       const result = await myAddedCarsCollection.updateOne(
         {_id: new ObjectId(id)},
@@ -74,6 +74,16 @@ async function run() {
 
       res.json(result);
     })
+
+
+    app.delete('/myAddedCars/:id', async (req, res) => {
+      const {id} = req.params;
+
+      const result = await myAddedCarsCollection.deleteOne({_id: new ObjectId(id)})
+
+      res.json(result);
+    })
+
 
     app.post('/car', async (req, res) => {
       const carData = req.body;
