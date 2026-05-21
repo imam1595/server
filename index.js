@@ -91,7 +91,7 @@ async function run() {
       res.json(result);
     })
 
-    app.get('/myAddedCars', async (req, res) => {
+    app.get('/myAddedCars', verifyToken ,async (req, res) => {
       const result = await myAddedCarsCollection.find().toArray();
       res.json(result);
     })
@@ -124,7 +124,7 @@ async function run() {
     })
 
 
-    app.post('/car', async (req, res) => {
+    app.post('/car', verifyToken ,async (req, res) => {
       const carData = req.body;
 
       console.log(carData);
@@ -148,7 +148,7 @@ async function run() {
     })
 
 
-    app.get('/bookings/:userId', async (req, res) => {
+    app.get('/bookings/:userId', verifyToken, async (req, res) => {
       const {userId} = req.params;
 
       const result = await bookingsCollection.find({userId:userId}).toArray();
@@ -156,7 +156,7 @@ async function run() {
       res.json(result);
     })
 
-    app.post('/bookings', async (req, res) => {
+    app.post('/bookings',verifyToken, async (req, res) => {
       const bookingData = req.body;
 
       const result = await bookingsCollection.insertOne(bookingData);
